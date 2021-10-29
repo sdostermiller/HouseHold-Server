@@ -16,7 +16,7 @@ router.get("/test", validateSession, (req, res) => {
 
 router.post("/create", validateSession, async (req, res) => {
 
-    const { itemName, itemQuantity, itemUrgent, itemFavorite } = req.body;
+    const { itemName, itemQuantity, itemUrgent, itemFavorite, listId } = req.body;
     
 
     const entry = {
@@ -25,7 +25,8 @@ router.post("/create", validateSession, async (req, res) => {
         itemUrgent,
         itemFavorite,
         userId: req.user.id,
-        houseId: req.user.houseId
+        houseId: req.user.houseId,
+        listId
     }
 
     try {
@@ -83,13 +84,33 @@ router.get("/mine", validateSession, async (req, res) => {
 });
 
 /*
+=========================
+    Get Item by ID
+=========================
+*/
+
+router.get("/:id", validateSession, async (req, res) => {
+
+    try {
+        const thisItem = await Item.findOne({
+            where: {
+                id: req.params.id
+            }
+        });
+        res.status(200).json(thisItem);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
+/*
 ===================
     Edit Item
 ===================
 */
 
 router.put("/edit/:id",  validateSession, async (req, res) => {
-    const { itemName, itemQuantity, itemUrgent, itemFavorite } = req.body;
+    const { itemName, itemQuantity, itemUrgent, itemFavorite, listId } = req.body;
     const itemId = req.params.id;
 
     const query = {
@@ -102,7 +123,8 @@ router.put("/edit/:id",  validateSession, async (req, res) => {
         itemName: itemName,
         itemQuantity: itemQuantity,
         itemUrgent: itemUrgent,
-        itemFavorite: itemFavorite
+        itemFavorite: itemFavorite,
+        listId: listId
     };
 
     try {

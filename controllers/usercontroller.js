@@ -8,7 +8,7 @@ const validateSession = require("../middleware/validate-session")
 
 const router = Router();
 
-router.get("/test", (req, res) => {
+router.get("/test", (res) => {
   res.send("testing the user route")
 });
 

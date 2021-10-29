@@ -32,11 +32,13 @@ const Item = db.define("item", {
   },
 
   userId: {
-    type: DataTypes.UUID
+    type: DataTypes.UUID,
+    allowNull: false
   },
 
   houseId: {
     type: DataTypes.UUID,
+    allowNull: true
   },
 
   listId: {

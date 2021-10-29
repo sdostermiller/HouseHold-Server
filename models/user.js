@@ -11,12 +11,15 @@ const User = db.define("user", {
 
   email: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
+    
   },
 
   userName: {
     type: DataTypes.STRING(100),
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
 
   passwordhash: {
@@ -37,6 +40,7 @@ const User = db.define("user", {
   userRole: {
     type: DataTypes.STRING(100),
     allowNull: false,
+    defaultValue: 'Guest'
   },
   
   houseId: {

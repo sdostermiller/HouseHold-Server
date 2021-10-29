@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const validateSession = require("../middleware/validate-session");
-const { House, models, User } = require("../models");
+const { House } = require("../models");
+const { UniqueConstraintError } = require("sequelize");
 
 const router = Router();
 
@@ -29,11 +30,19 @@ router.post("/create", validateSession, async (req, res) => {
             newEntry
         });
     } catch (e) {
+
+        if (e instanceof UniqueConstraintError) {
+            res.status(409).json({
+              message: "Email already in use.  Please log in.",
+              error: e
+            });
+        } else {
+
         res.status(500).json({
             message: "Failed to create House",
             error: e
         });
-    }
+    }}
 });
 
 

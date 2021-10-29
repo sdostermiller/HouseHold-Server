@@ -1,18 +1,18 @@
 const { DataTypes } = require("sequelize");
 const db = require("../db");
 
-
-// Example UserTable Build this out Need more columns add it here
-
 const List = db.define("list", {
   id: {
     type: DataTypes.UUID,
-    primaryKey: true
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false
   },
 
   listName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
 
   listType: {
@@ -20,15 +20,11 @@ const List = db.define("list", {
       allowNull: true,
   },
 
-  houseName: {
-      type: DataTypes.STRING,
-  },
-
   houseId: {
       type: DataTypes.UUID
   },
 
-  listId: {
+  userId: {
       type: DataTypes.UUID
   }
 

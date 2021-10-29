@@ -1,10 +1,11 @@
 const { Router } = require("express");
 const validateSession = require("../middleware/validate-session");
 const { List } = require("../models");
+const { UniqueConstraintError } = require("sequelize");
 
 const router = Router();
 
-router.get("/test", validateSession, (req, res) => {
+router.get("/test", validateSession, (res) => {
     res.send("testing protected get list route")
 });
 
@@ -17,15 +18,13 @@ router.get("/test", validateSession, (req, res) => {
 router.post("/create", validateSession, async (req, res) => {
 
     const { listName, listType } = req.body;
-    const houseName = req.user.houseName;
-    const  id  = req.user.id;
+    const  userId  = req.user.id;
     const house = req.user.houseId;
 
     const entry = {
         listName,
         listType,
-        houseName: houseName,
-        userId: id,
+        userId: userId,
         houseId: house
     }
 
@@ -36,11 +35,20 @@ router.post("/create", validateSession, async (req, res) => {
             newEntry
         });
     } catch (e) {
+
+
+    if (e instanceof UniqueConstraintError) {
+        res.status(409).json({
+          message: "List name already in use.  Please try again.",
+          error: e
+        });
+    } else {
         res.status(500).json({
             message: "Failed to create list",
             error: e
         });
     }
+}
 });
 
 /*
@@ -50,17 +58,17 @@ router.post("/create", validateSession, async (req, res) => {
 */
 
 router.get("/ours", validateSession, async (req,res) => {
-
+console.log(req.user.houseId)
 
     try {
-        const ourLists = await List.findAll()({
+        const ourLists = await List.findAll({
             where: {
-                houseName: req.user.houseName
+                houseId: req.user.houseId
             }
         });
         res.status(200).json(ourLists);
     } catch (e) {
-        res.status(500).json({ error: e });
+        res.status(500).json({ error: JSON.stringify(e) });
     }
 });
 
@@ -117,11 +125,7 @@ router.get("/withitems/:id", validateSession, async (req, res) => {
             where: {
                 id: req.params.id
             },
-            include: [
-                {
-                    model: models.List
-                }
-            ] 
+            include: [ "items" ] 
         });
         res.status(200).json(thisList);
     } catch (e) {
