@@ -5,7 +5,7 @@ const { UniqueConstraintError } = require("sequelize");
 
 const router = Router();
 
-router.get("/test", (req, res) => {
+router.get("/test", validateSession, (req, res) => {
     res.send("testing the house route")
 });
 
