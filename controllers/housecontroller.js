@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const validateSession = require("../middleware/validate-session");
 const { House } = require("../models");
-const { UniqueConstraintError } = require("sequelize");her
+const { UniqueConstraintError } = require("sequelize");
 
 const router = Router();
 
