@@ -23,7 +23,7 @@ app.use("/item", controllers.Item);
 const resetDatabase = {force:true}
 db.authenticate()
 // add a resetDatabase inside the db.sync to drop all your tables if needed
-// example:  .then(() => db.sync(resetDatabase))
+// example:  .then(() => db.sync(resetDatabase)) just adding this to reset the database
   .then(() => db.sync(  ))
   .then(() =>
     app.listen(process.env.PORT, () => {
