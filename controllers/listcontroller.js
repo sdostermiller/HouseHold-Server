@@ -16,20 +16,20 @@ router.get("/test", validateSession, (res) => {
 */
 
 router.post("/create", validateSession, async (req, res) => {
-
+    try {
     const { listName, listType } = req.body;
     const  userId  = req.user.id;
-    const house = req.user.houseId;
+    const houseId = req.user.houseId;
 
-    const entry = {
+    const newEntry = {
         listName,
         listType,
         userId: userId,
-        houseId: house
+        houseId: houseId
     }
+// console.log("User:",userId, "House:", houseId)
 
-    try {
-        const newEntry = await List.create(entry);
+        await List.create(newEntry);
         res.status(200).json({
             message: "List created",
             newEntry

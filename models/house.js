@@ -5,8 +5,7 @@ const House = db.define("house", {
 id: {
     type: DataTypes.UUID,
     primaryKey: true,
-    defaultValue: DataTypes.UUIDV4,
-    allowNull: false
+    defaultValue: DataTypes.UUIDV4
 },
 
 houseName: {
@@ -15,6 +14,9 @@ houseName: {
     unique: true
 },
 
+ownerId: {
+    type: DataTypes.UUID
+}
 
 });
 

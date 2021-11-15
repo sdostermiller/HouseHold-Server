@@ -133,6 +133,26 @@ router.post("/login", async (req, res) => {
   }
 });
 
+/*
+=======================
+    Get User by ID
+=======================
+*/
+
+router.get("/:id", validateSession, async (req, res) => {
+
+  try {
+      const thisUser = await User.findOne({
+          where: {
+              id: req.params.id
+          }
+      });
+      res.status(200).json(thisUser);
+  } catch (e) {
+      res.status(500).json({ error: e });
+  }
+});
+
 
 /*
 ===================

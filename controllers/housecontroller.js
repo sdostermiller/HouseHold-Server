@@ -16,11 +16,13 @@ router.get("/test", validateSession, (req, res) => {
 */
 
 router.post("/create", validateSession, async (req, res) => {
+    console.log
     const { houseName } = req.body;
-
+    const  userId  = req.user.id;
 
     const newEntry = {
-        houseName: houseName
+        houseName: houseName,
+        ownerId: userId
     }
 
     try {
@@ -33,14 +35,14 @@ router.post("/create", validateSession, async (req, res) => {
 
         if (e instanceof UniqueConstraintError) {
             res.status(409).json({
-              message: "Email already in use.  Please log in.",
+              message: "House name already in use.  Please log in.",
               error: e
             });
         } else {
-
-        res.status(500).json({
-            message: "Failed to create House",
-            error: e
+            console.log(e)
+            res.status(500).json({
+                message: "Failed to create House",
+                error: e,
         });
     }}
 });
