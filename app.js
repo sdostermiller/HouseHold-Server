@@ -18,12 +18,12 @@ app.use("/house", controllers.House);
 app.use("/list", controllers.List);
 app.use("/item", controllers.Item);
 
-// app.use(middleware.validateSession);
+// app.use(middleware.validateSession); 
 
 const resetDatabase = {force:true}
 db.authenticate()
 // add a resetDatabase inside the db.sync to drop all your tables if needed
-// example:  .then(() => db.sync(resetDatabase)) just adding this to reset the database
+// example:  .then(() => db.sync(resetDatabase)) inserting text to initiate database restoration in heroku
   .then(() => db.sync(  ))
   .then(() =>
     app.listen(process.env.PORT, () => {
