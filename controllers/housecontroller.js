@@ -96,7 +96,7 @@ router.get("/roster", validateSession, async (req, res) => {
     try {
         const thisHouse = await House.findOne({
             where: {
-                id: req.user.id
+                id: req.user.houseId
             },
             include: ["users"]
 
