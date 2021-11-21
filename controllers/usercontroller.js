@@ -139,12 +139,12 @@ router.post("/login", async (req, res) => {
 =======================
 */
 
-router.get("/:id", validateSession, async (req, res) => {
+router.get("/me", validateSession, async (req, res) => {
 
   try {
       const thisUser = await User.findOne({
           where: {
-              id: req.params.id
+              id: req.user.id
           }
       });
       res.status(200).json(thisUser);
