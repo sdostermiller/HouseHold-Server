@@ -76,7 +76,7 @@ router.get("/mine", validateSession, async (req, res) => {
     try {
         const thisHouse = await House.findOne({
             where: {
-                userId: req.user.id
+                id: req.user.houseId
             }
         });
         res.status(200).json(thisHouse);
