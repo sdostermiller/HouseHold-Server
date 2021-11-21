@@ -87,16 +87,16 @@ router.get("/:id", validateSession, async (req, res) => {
 
 /*
 =======================================
-    Get HouseHold by ID with Users
+    Get HouseHold by logged in user with Users
 =======================================
 */
 
-router.get("/roster/:id", validateSession, async (req, res) => {
+router.get("/roster", validateSession, async (req, res) => {
 
     try {
         const thisHouse = await House.findOne({
             where: {
-                id: req.params.id
+                id: req.user.id
             },
             include: ["users"]
 
