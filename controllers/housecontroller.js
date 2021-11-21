@@ -71,12 +71,12 @@ router.get("/all", validateSession, async (req, res) => {
 ============================
 */
 
-router.get("/:id", validateSession, async (req, res) => {
+router.get("/mine", validateSession, async (req, res) => {
 
     try {
         const thisHouse = await House.findOne({
             where: {
-                id: req.params.id
+                userId: req.user.id
             }
         });
         res.status(200).json(thisHouse);
