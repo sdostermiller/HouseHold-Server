@@ -67,7 +67,7 @@ router.get("/all", validateSession, async (req, res) => {
 
 /*
 ============================
-    Get HouseHold by ID
+    Get HouseHold by User
 ============================
 */
 

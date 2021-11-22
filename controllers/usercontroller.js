@@ -160,9 +160,9 @@ router.get("/me", validateSession, async (req, res) => {
 ===================
 */
 
-router.put("/edit/:id",  validateSession, async (req, res) => {
+router.put("/edit/",  validateSession, async (req, res) => {
   const { userName, email, passwordhash, firstName, lastName, userRole, houseId } = req.body;
-  const userId = req.params.id;
+  const userId = req.user.id;
 
   const query = {
       where: {
