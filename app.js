@@ -5,13 +5,14 @@ const db = require("./db");
 
 const app = Express();
 
-
+app.use(require("./middleware/cors"));
 const middleware = require("./middleware");
 const controllers = require("./controllers");
 
 // Parse the body of all requests as JSON
 app.use(Express.json());
 app.use(require("./middleware/headers"));
+
 
 app.use("/user", controllers.User);
 app.use("/house", controllers.House);
