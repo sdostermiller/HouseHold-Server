@@ -173,7 +173,7 @@ router.put("/edit/",  validateSession, async (req, res) => {
   const editedUser = {
       userName,
       email,
-      passwordhash,
+      passwordhash: bcrypt.hashSync(passwordhash, 10),
       firstName,
       lastName,
       userRole,
